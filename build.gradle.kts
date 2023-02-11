@@ -72,4 +72,11 @@ bukkit {
   main = "me.godofpro.timerplugin.TimerPlugin"
   apiVersion = "1.19"
   authors = listOf("GodOfPro")
+
+  commands {
+    register("timer") {
+      description = "Timer Command"
+      usage = "Timer"
+    }
+  }
 }
