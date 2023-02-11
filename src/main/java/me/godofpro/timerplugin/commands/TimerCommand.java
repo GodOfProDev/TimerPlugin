@@ -26,10 +26,21 @@ public class TimerCommand implements CommandExecutor {
       return true;
     }
 
-    System.out.println(args.length);
-    System.out.println(args);
+    if (args.length == 0) {
+      sender.sendMessage(ChatUtil.translate("&c/timer <stop/start/pause>"));
+      return true;
+    }
 
-    plugin.getTimerManager().addPlayer(player, Instant.now().plus(1, ChronoUnit.MINUTES));
+    if (args[0].equalsIgnoreCase("start"))
+      plugin.getTimerManager().addPlayer(player, Instant.now().plus(1, ChronoUnit.MINUTES));
+    else if (args[0].equalsIgnoreCase("stop"))
+      plugin.getTimerManager().stopTimer(player);
+    else if (args[0].equalsIgnoreCase("pause"))
+      plugin.getTimerManager().pauseTimer(player);
+    else {
+      sender.sendMessage(ChatUtil.translate("&cWrong arguments. /timer <stop/start/pause>"));
+    }
+
 
     return true;
   }

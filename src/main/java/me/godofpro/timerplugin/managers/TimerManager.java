@@ -1,6 +1,7 @@
 package me.godofpro.timerplugin.managers;
 
 import me.godofpro.timerplugin.TimerPlugin;
+import me.godofpro.timerplugin.utils.ChatUtil;
 import org.bukkit.entity.Player;
 
 import java.time.Instant;
@@ -19,7 +20,32 @@ public class TimerManager {
   }
 
   public void addPlayer(Player player, Instant whenEnds) {
-    players.put(player.getUniqueId(), new Timer(plugin, player, whenEnds));
+    if (!players.containsKey(player.getUniqueId())) {
+      players.put(player.getUniqueId(), new Timer(plugin, player, whenEnds, this));
+    }else {
+      player.sendMessage(ChatUtil.translate("&cThere is already a timer for you"));
+    }
+  }
+
+  public void stopTimer(Player player) {
+    if (players.containsKey(player.getUniqueId())) {
+      players.get(player.getUniqueId()).stopTimer();
+    } else {
+      player.sendMessage(ChatUtil.translate("&cThere isn't any timer for you"));
+    }
+  }
+
+  public void pauseTimer(Player player) {
+    if (players.containsKey(player.getUniqueId())) {
+      players.get(player.getUniqueId()).pauseTimer();
+    } else {
+      player.sendMessage(ChatUtil.translate("&cThere isn't any timer for you"));
+    }
+  }
+
+  public void removeTimer(Player player) {
+    players.remove(player.getUniqueId());
+    player.sendMessage(ChatUtil.translate("&cThe timer has ended"));
   }
 
   public Map<UUID, Timer> getPlayers() {

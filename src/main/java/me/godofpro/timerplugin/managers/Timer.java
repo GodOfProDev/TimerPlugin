@@ -26,7 +26,12 @@ public class Timer {
   private final Player player;
   private BossBar activeBossbar;
 
-  public Timer(TimerPlugin plugin, Player player, Instant whenEnds) {
+  private final TimerManager timerManager;
+
+  private boolean pause = false;
+
+  public Timer(TimerPlugin plugin, Player player, Instant whenEnds, TimerManager timerManager) {
+    this.timerManager = timerManager;
     this.plugin = plugin;
     this.scheduler = Bukkit.getScheduler();
     this.player = player;
@@ -39,6 +44,14 @@ public class Timer {
     task.cancel();
   }
 
+  public void pauseTimer() {
+    this.pause = true;
+  }
+
+  public void continueTimer() {
+    this.pause = false;
+  }
+
   private void activateTimer(Instant whenEnds) {
     this.timerEndTime = whenEnds;
     constructBossbar();
@@ -46,10 +59,13 @@ public class Timer {
   }
 
   private void run() {
+    if (pause) return;
+
     Instant now = Instant.now();
     if (now.isAfter(this.timerEndTime)) {
       hideActiveBossBar();
       task.cancel();
+      timerManager.removeTimer(player);
       return;
     }
 
