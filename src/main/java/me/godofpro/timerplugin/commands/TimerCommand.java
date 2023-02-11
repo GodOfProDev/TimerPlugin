@@ -27,7 +27,7 @@ public class TimerCommand implements CommandExecutor {
     }
 
     if (args.length == 0) {
-      sender.sendMessage(ChatUtil.translate("&c/timer <stop/start/pause>"));
+      sender.sendMessage(ChatUtil.translate("&c/timer <stop/start/pause/continue>"));
       return true;
     }
 
@@ -40,7 +40,7 @@ public class TimerCommand implements CommandExecutor {
     else if (args[0].equalsIgnoreCase("continue"))
       plugin.getTimerManager().continueTimer(player);
     else
-      sender.sendMessage(ChatUtil.translate("&cWrong arguments. /timer <stop/start/pause>"));
+      sender.sendMessage(ChatUtil.translate("&cWrong arguments. /timer <stop/start/pause/continue>"));
 
 
     return true;
