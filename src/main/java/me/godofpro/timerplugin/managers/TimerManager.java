@@ -30,6 +30,7 @@ public class TimerManager {
   public void stopTimer(Player player) {
     if (players.containsKey(player.getUniqueId())) {
       players.get(player.getUniqueId()).stopTimer();
+      players.remove(player.getUniqueId());
     } else {
       player.sendMessage(ChatUtil.translate("&cThere isn't any timer for you"));
     }

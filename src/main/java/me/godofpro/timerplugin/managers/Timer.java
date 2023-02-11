@@ -55,11 +55,14 @@ public class Timer {
   private void activateTimer(Instant whenEnds) {
     this.timerEndTime = whenEnds;
     constructBossbar();
-    task = scheduler.runTaskTimer(plugin, this::run, 20L, 20L);
+    task = scheduler.runTaskTimer(plugin, this::run, 0L, 20L);
   }
 
   private void run() {
-    if (pause) return;
+    if (pause) {
+      timerEndTime = timerEndTime.plus(1, ChronoUnit.SECONDS);
+      return;
+    }
 
     Instant now = Instant.now();
     if (now.isAfter(this.timerEndTime)) {
