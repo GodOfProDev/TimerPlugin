@@ -43,6 +43,14 @@ public class TimerManager {
     }
   }
 
+  public void continueTimer(Player player) {
+    if (players.containsKey(player.getUniqueId())) {
+      players.get(player.getUniqueId()).continueTimer();
+    } else {
+      player.sendMessage(ChatUtil.translate("&cThere isn't any timer for you"));
+    }
+  }
+
   public void removeTimer(Player player) {
     players.remove(player.getUniqueId());
     player.sendMessage(ChatUtil.translate("&cThe timer has ended"));

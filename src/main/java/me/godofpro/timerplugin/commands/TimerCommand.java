@@ -37,9 +37,10 @@ public class TimerCommand implements CommandExecutor {
       plugin.getTimerManager().stopTimer(player);
     else if (args[0].equalsIgnoreCase("pause"))
       plugin.getTimerManager().pauseTimer(player);
-    else {
+    else if (args[0].equalsIgnoreCase("continue"))
+      plugin.getTimerManager().continueTimer(player);
+    else
       sender.sendMessage(ChatUtil.translate("&cWrong arguments. /timer <stop/start/pause>"));
-    }
 
 
     return true;
